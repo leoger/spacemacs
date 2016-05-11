@@ -101,6 +101,10 @@
                   src=\"http://www.pirilampo.org/styles/readtheorg/js/readtheorg.js\"></script>")
          (publish-target (concat user-emacs-directory "export/"))
          (org-html-htmlize-output-type 'css)
+         ;; remove comma from the set of forbidden border characters so that "~,~" renders as code on export
+         (e org-emphasis-regexp-components)
+         (org-emphasis-regexp-components
+          (list (car e) (nth 1 e) (replace-regexp-in-string "," "" (nth 2 e)) (nth 3 e) (nth 4 e)))
          (org-publish-project-alist
           `(("spacemacs"
              :components ("spacemacs-doc"
